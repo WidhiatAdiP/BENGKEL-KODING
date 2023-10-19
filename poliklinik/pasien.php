@@ -20,12 +20,12 @@ include_once("koneksi.php");
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
     crossorigin="anonymous">   
     
-    <title>Form Pengisian Data Dokter</title>   <!--Judul Halaman-->
+    <title>Form Pengisian Data Pasien</title>   <!--Judul Halaman-->
 </head>
 <body>
 <div class="container">
 <h3>
-    Form Pengisian Data Dokter
+    Form Pengisian Data Pasien
 </h3>
 <hr>    
 <!--Form Input Data-->
@@ -33,15 +33,15 @@ include_once("koneksi.php");
 <form class="form" method="POST" action="" name="myForm" onsubmit="return(validate());">
     <!-- Kode php untuk menghubungkan form dengan database -->
     <?php
-    $nama = '';
+    $datanama = '';
     $alamat ='';
     $no_hp = '';
     if (isset($_GET['id'])) {
         $ambil = mysqli_query($mysqli, 
-        "SELECT * FROM dokter 
+        "SELECT * FROM pasien 
         WHERE id='" . $_GET['id'] . "'");
         while ($row = mysqli_fetch_array($ambil)) {
-            $nama = $row['nama'];
+            $datanama = $row['datanama'];
             $alamat = $row['alamat'];
             $no_hp = $row['no_hp'];
         }
@@ -55,7 +55,7 @@ include_once("koneksi.php");
         <label for="inputNama" class="form-label fw-bold">
             Nama
         </label>
-        <input type="text" class="form-control" name="nama" id="inputNama" placeholder="Nama" value="<?php echo $nama ?>">
+        <input type="text" class="form-control" name="datanama" id="inputNama" placeholder="Nama" value="<?php echo $datanama ?>">
     </div>
         <div class="col">
             <label for="inputAlamat" class="form-label fw-bold">
@@ -81,7 +81,7 @@ include_once("koneksi.php");
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Nama</th>
+            <th scope="col">Data Nama</th>
             <th scope="col">Alamat</th>
             <th scope="col">No HP</th>
             <th scope="col">Aksi</th>
@@ -93,22 +93,22 @@ include_once("koneksi.php");
         berdasarkan status dan tanggal awal-->
         <?php
         $result = mysqli_query(
-            $mysqli,"SELECT * FROM dokter ORDER BY nama"
+            $mysqli,"SELECT * FROM pasien ORDER BY datanama"
             );
         $no = 1;
         foreach ($result as $data){
         ?>
             <tr>
                 <th scope="row"><?php echo $no++ ?></th>
-                <td><?php echo htmlspecialchars($data['nama']) ?></td>
+                <td><?php echo htmlspecialchars($data['datanama']) ?></td>
                 <td><?php echo htmlspecialchars($data['alamat']) ?></td>
                 <td><?php echo htmlspecialchars($data['no_hp']) ?></td>
                 <td>
                     <a class="btn btn-info rounded-pill px-3" 
-                    href="dokter.php?id=<?php echo $data['id'] ?>">Ubah
+                    href="pasien.php?id=<?php echo $data['id'] ?>">Ubah
                     </a>
                     <a class="btn btn-danger rounded-pill px-3" 
-                    href="dokter.php?id=<?php echo $data['id'] ?>&aksi=hapus">Hapus
+                    href="pasien.php?id=<?php echo $data['id'] ?>&aksi=hapus">Hapus
                     </a>
                 </td>
             </tr>
@@ -120,38 +120,38 @@ include_once("koneksi.php");
 <?php
 if (isset($_POST['simpan'])) {
     if (isset($_POST['id'])) {
-        $ubah = mysqli_query($mysqli, "UPDATE dokter SET 
-                                        nama = '" . $_POST['nama'] . "',
+        $ubah = mysqli_query($mysqli, "UPDATE pasien SET 
+                                        datanama = '" . $_POST['datanama'] . "',
                                         alamat = '" . $_POST['alamat'] . "',
                                         no_hp = '" . $_POST['no_hp'] . "'
                                         WHERE
                                         id = '" . $_POST['id'] . "'");
     } else {
-        $tambah = mysqli_query($mysqli, "INSERT INTO dokter (`nama`,`alamat`,`no_hp`) 
+        $tambah = mysqli_query($mysqli, "INSERT INTO pasien (`datanama`,`alamat`,`no_hp`) 
                                         VALUES ( 
-                                            '" . $_POST['nama'] . "',
+                                            '" . $_POST['datanama'] . "',
                                             '" . $_POST['alamat'] . "',
                                             '" . $_POST['no_hp'] . "'
                                             )");
     }
 
     echo "<script> 
-            document.location='dokter.php';
+            document.location='pasien.php';
             </script>";
 }
 
 if (isset($_GET['aksi'])) {
     if ($_GET['aksi'] == 'hapus') {
-        $hapus = mysqli_query($mysqli, "DELETE FROM dokter WHERE id = '" . $_GET['id'] . "'");
+        $hapus = mysqli_query($mysqli, "DELETE FROM pasien WHERE id = '" . $_GET['id'] . "'");
     } else if ($_GET['aksi'] == 'ubah_status') {
-        $ubah_status = mysqli_query($mysqli, "UPDATE dokter SET 
+        $ubah_status = mysqli_query($mysqli, "UPDATE pasien SET 
                                         status = '" . $_GET['status'] . "' 
                                         WHERE
                                         id = '" . $_GET['id'] . "'");
     }
 
     echo "<script> 
-            document.location='dokter.php';
+            document.location='pasien.php';
             </script>";
 }
 ?>
