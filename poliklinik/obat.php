@@ -38,7 +38,7 @@ include_once("koneksi.php");
     $tanggal_kedaluarsa = '';
     $dosis_obat = '';
     if (isset($_GET['id'])) {
-        $ambil = mysqli_query($mysqli, 
+        $ambil = mysqli_query($koneksi, 
         "SELECT * FROM obat 
         WHERE id='" . $_GET['id'] . "'");
         while ($row = mysqli_fetch_array($ambil)) {
@@ -102,7 +102,7 @@ include_once("koneksi.php");
         berdasarkan status dan tanggal awal-->
         <?php
         $result = mysqli_query(
-            $mysqli,"SELECT * FROM obat ORDER BY nama_obat"
+            $koneksi,"SELECT * FROM obat ORDER BY nama_obat"
             );
         $no = 1;
         foreach ($result as $data){
@@ -130,7 +130,7 @@ include_once("koneksi.php");
 <?php
 if (isset($_POST['simpan'])) {
     if (isset($_POST['id'])) {
-        $ubah = mysqli_query($mysqli, "UPDATE obat SET 
+        $ubah = mysqli_query($koneksi, "UPDATE obat SET 
                                         nama_obat = '" . $_POST['nama_obat'] . "',
                                         jenis_obat = '" . $_POST['jenis_obat'] . "',
                                         tanggal_kedaluarsa = '" . $_POST['tanggal_kedaluarsa'] . "',
@@ -138,7 +138,7 @@ if (isset($_POST['simpan'])) {
                                         WHERE
                                         id = '" . $_POST['id'] . "'");
     } else {
-        $tambah = mysqli_query($mysqli, "INSERT INTO obat (`nama_obat`,`jenis_obat`,`tanggal_kedaluarsa`,`dosis_obat`) 
+        $tambah = mysqli_query($koneksi, "INSERT INTO obat (`nama_obat`,`jenis_obat`,`tanggal_kedaluarsa`,`dosis_obat`) 
                                         VALUES ( 
                                             '" . $_POST['nama_obat'] . "',
                                             '" . $_POST['jenis_obat'] . "',
@@ -154,9 +154,9 @@ if (isset($_POST['simpan'])) {
 
 if (isset($_GET['aksi'])) {
     if ($_GET['aksi'] == 'hapus') {
-        $hapus = mysqli_query($mysqli, "DELETE FROM obat WHERE id = '" . $_GET['id'] . "'");
+        $hapus = mysqli_query($koneksi, "DELETE FROM obat WHERE id = '" . $_GET['id'] . "'");
     } else if ($_GET['aksi'] == 'ubah_status') {
-        $ubah_status = mysqli_query($mysqli, "UPDATE obat SET 
+        $ubah_status = mysqli_query($koneksi, "UPDATE obat SET 
                                         status = '" . $_GET['status'] . "' 
                                         WHERE
                                         id = '" . $_GET['id'] . "'");

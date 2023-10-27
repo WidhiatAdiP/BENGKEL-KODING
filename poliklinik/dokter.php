@@ -37,7 +37,7 @@ include_once("koneksi.php");
     $alamat ='';
     $no_hp = '';
     if (isset($_GET['id'])) {
-        $ambil = mysqli_query($mysqli, 
+        $ambil = mysqli_query($koneksi, 
         "SELECT * FROM dokter 
         WHERE id='" . $_GET['id'] . "'");
         while ($row = mysqli_fetch_array($ambil)) {
@@ -93,7 +93,7 @@ include_once("koneksi.php");
         berdasarkan status dan tanggal awal-->
         <?php
         $result = mysqli_query(
-            $mysqli,"SELECT * FROM dokter ORDER BY nama"
+            $koneksi,"SELECT * FROM dokter ORDER BY nama"
             );
         $no = 1;
         foreach ($result as $data){
@@ -120,14 +120,14 @@ include_once("koneksi.php");
 <?php
 if (isset($_POST['simpan'])) {
     if (isset($_POST['id'])) {
-        $ubah = mysqli_query($mysqli, "UPDATE dokter SET 
+        $ubah = mysqli_query($koneksi, "UPDATE dokter SET 
                                         nama = '" . $_POST['nama'] . "',
                                         alamat = '" . $_POST['alamat'] . "',
                                         no_hp = '" . $_POST['no_hp'] . "'
                                         WHERE
                                         id = '" . $_POST['id'] . "'");
     } else {
-        $tambah = mysqli_query($mysqli, "INSERT INTO dokter (`nama`,`alamat`,`no_hp`) 
+        $tambah = mysqli_query($koneksi, "INSERT INTO dokter (`nama`,`alamat`,`no_hp`) 
                                         VALUES ( 
                                             '" . $_POST['nama'] . "',
                                             '" . $_POST['alamat'] . "',
@@ -142,9 +142,9 @@ if (isset($_POST['simpan'])) {
 
 if (isset($_GET['aksi'])) {
     if ($_GET['aksi'] == 'hapus') {
-        $hapus = mysqli_query($mysqli, "DELETE FROM dokter WHERE id = '" . $_GET['id'] . "'");
+        $hapus = mysqli_query($koneksi, "DELETE FROM dokter WHERE id = '" . $_GET['id'] . "'");
     } else if ($_GET['aksi'] == 'ubah_status') {
-        $ubah_status = mysqli_query($mysqli, "UPDATE dokter SET 
+        $ubah_status = mysqli_query($koneksi, "UPDATE dokter SET 
                                         status = '" . $_GET['status'] . "' 
                                         WHERE
                                         id = '" . $_GET['id'] . "'");

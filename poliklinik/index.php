@@ -44,7 +44,7 @@ include_once("koneksi.php");
 									</div>
 								</li>
 								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-									<a class="nav-link" href="periksa.php">Periksa</a>
+									<a class="nav-link" href="periksa.php" target="scs_body">Periksa</a>
 								</li>
 							</ul>
 						</div>
